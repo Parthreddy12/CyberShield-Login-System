@@ -1,40 +1,56 @@
-import getpass as gp
-
-a = (gp.getpass("Enter the new password: ")) 
-if a<1000:
-    print("Please enter 4 digit number password")
-while a<1000:
-    a = (gp.getpass("Enter the new password: "))
-    if a<1000:
-       print("Please enter 4 digit number password")
-    else:
-        pass
-        
-b = int(input("Confirm the new password: "))
-if a!=b:
-    print("invalid password")
-else:
-    pass
-while a!=b:
-    a = (gp.getpass("Enter the new password: "))
-    b = (gp.getpass("Confirm the new password: "))
-    if a!=b:
-        print("invalid password")
-    else:
-        print("continue ")    
-
-c = (gp.getpass("Enter the password: "))
-if c!=a:
-        print("invalid password \nplease enter correct password")
-
-while c!=a:
-    c = (gp.getpass("Enter the password: "))
-    if c!=a:
-        print("invalid password \nplease enter correct password")
-    else:
-        print("correct password")    
-        
+import msvcrt
 import random 
+
+def password_input(message):
+
+    password = ""
+
+    print(message, end="", flush=True)
+
+    while True:
+
+        ch = msvcrt.getch().decode("utf-8")
+
+        if ch == "\r":
+
+            if len(password) < 4:
+                print("\nPlease enter a 4 digit password")
+
+                password = ""
+
+                print(message, end="", flush=True)
+
+                continue
+
+            else:
+                print("\nPassword Accepted")
+
+                return password
+
+        elif ch == "\b":
+
+            if len(password) > 0:
+                password = password[:-1]
+                print("\b \b", end="", flush=True)
+
+        else:
+            password += ch
+            print("*", end="", flush=True)
+
+password = password_input("Enter New Password: ")
+
+while True:
+
+    confirm_password = password_input("Confirm New Password: ")
+
+    if password != confirm_password:
+        print("Passwords do not match. Please try again.")
+        continue
+    else:
+        print("Password Successfully Saved")
+        break
+
+
 print("\nPlease enter the OTP showing below") 
 otp= random.randint(1000,9999)
 print(otp)
@@ -48,8 +64,20 @@ while d!=otp:
     if d!=otp:    
         print("please enter valid OTP")
     else:
-        print("OTP matched ")  
-      
-       
-print("\033[94mwelcome to the python world 🌍")        
+        print("OTP matched ") 
+
+
+while True:
+
+    login= password_input("Enter Login Password: ")
+
+    if password != login:
+        print("Invalid password. Please try again.")
+        continue
+    else:
+        print("Password Login Successfully")
+        break
+
+         
+print("\033[94m \nwelcome to the python world 🌍\033")        
     
