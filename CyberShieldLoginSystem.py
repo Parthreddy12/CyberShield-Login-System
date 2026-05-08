@@ -1,5 +1,6 @@
 import msvcrt
 import random 
+import time
 
 def password_input(message):
 
@@ -8,27 +9,18 @@ def password_input(message):
     print(message, end="", flush=True)
 
     while True:
-
         ch = msvcrt.getch().decode("utf-8")
-
         if ch == "\r":
-
             if len(password) < 4:
                 print("\nPlease enter a 4 digit password")
-
                 password = ""
-
                 print(message, end="", flush=True)
-
                 continue
-
             else:
                 print("\nPassword Accepted")
-
                 return password
 
         elif ch == "\b":
-
             if len(password) > 0:
                 password = password[:-1]
                 print("\b \b", end="", flush=True)
@@ -51,20 +43,33 @@ while True:
         break
 
 
-print("\nPlease enter the OTP showing below") 
-otp= random.randint(1000,9999)
-print(otp)
-d = int(input("Enter the OTP: "))
-if d!=otp:
-    print("please enter valid OTP")
-while d!=otp:
-    otp= random.randint(1000,9999)
-    print(otp)
-    d  = int(input("Enter the OTP: "))
-    if d!=otp:    
-        print("please enter valid OTP")
-    else:
-        print("OTP matched ") 
+
+print("\nPlease enter the OTP showing below")
+while True:
+    otp = random.randint(1000, 9999)
+    print("\nYour OTP:", otp)
+    print("OTP is valid for 10 seconds")
+
+    start_time = time.time()
+
+    d = input("Enter the OTP: ")
+
+    end_time = time.time()
+
+    if end_time - start_time > 10:
+        print("Time expired! Generating new OTP...")
+        continue
+
+    if d == "":
+        print("Please enter the OTP")
+        continue
+
+    if int(d) != otp:
+        print("Please enter valid OTP")
+        continue
+
+    print("OTP matched")
+    break
 
 
 while True:
